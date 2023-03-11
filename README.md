@@ -1,8 +1,6 @@
 
 # Dynamic Convolution and dense layers
 
-A brief description of what this project does and who it's for
-
 
 Introducing Hybrid convolution and dense layers
 
