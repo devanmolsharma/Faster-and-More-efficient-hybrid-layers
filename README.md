@@ -50,6 +50,14 @@ Contains 1 layer (4 kernels (8x8)) stride 8, hidden size=512
 
 ![App Screenshot](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/light.png?raw=true)
 
+Samples of my 479 kb encoder (trained 3-4 hours)
+Contains 1 layer (4 kernels (8x8)) stride 8, hidden size=128
+
+![App Screenshot](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/final%20(1).png?raw=true)
+
+
+![App Screenshot](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/final.png?raw=true)
+
 ## Installation
 
 The code defines two custom PyTorch modules, HybridDense and DynamicConv.
@@ -77,4 +85,5 @@ The encoder and decoder classes are defined using DynamicConv layers to implemen
 
 ## Checkpoints
 
-- [Checkpoint](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/encoder%20(1).pt?raw=true)
+- [10 mb Checkpoint](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/encoder%20(1).pt?raw=true)
+- [479 kb Checkpoint](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/lightencoder.pt?raw=true)
