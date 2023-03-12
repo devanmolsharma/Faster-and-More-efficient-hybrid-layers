@@ -20,6 +20,7 @@ class HybridDense(nn.Linear):
         # Multiply with the learned scaling parameters and raise to learned power.
         x = torch.mul(self.muls,torch.pow(x, self.powers))
         # Apply the sign of the linear output.
+        x = torch.nan_to_num(x)# handle nan
         x = torch.copysign(x,lin)
         return x
     
