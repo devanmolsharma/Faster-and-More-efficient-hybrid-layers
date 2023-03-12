@@ -46,7 +46,7 @@ Contains 1 layer (4 kernels (8x8)) stride 8, hidden size=512
 ## Installation
 
 ```python
-  from hybrids encoder
+  from hybrids import encoder
   enc = torch.load(encoder.pt)
   from diffusers import AutoencoderKL, UNet2DConditionModel, PNDMScheduler
  
