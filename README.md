@@ -50,7 +50,7 @@ Contains 1 layer (4 kernels (8x8)) stride 8, hidden size=512
 
 ![App Screenshot](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/light.png?raw=true)
 
-Samples of my 479 kb encoder (trained 3-4 hours)
+Samples of my 479 kb encoder (trained less than 1 hour)
 Contains 1 layer (4 kernels (8x8)) stride 8, hidden size=128
 
 ![App Screenshot](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/final%20(1).png?raw=true)
