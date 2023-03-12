@@ -56,8 +56,8 @@ The encoder and decoder classes are defined using DynamicConv layers to implemen
 ```python
   from hybrids import encoder
   enc = torch.load(encoder.pt)
-  from diffusers import AutoencoderKL, UNet2DConditionModel, PNDMScheduler
- 
+  
+#from diffusers import AutoencoderKL
 # sdvae = AutoencoderKL.from_pretrained("CompVis/stable-diffusion-v1-4", subfolder="vae")
 # sdvae = sdvae.to('cuda')
 # use decoder from this
