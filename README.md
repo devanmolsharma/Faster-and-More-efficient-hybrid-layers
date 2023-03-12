@@ -45,6 +45,14 @@ Contains 1 layer (4 kernels (8x8)) stride 8, hidden size=512
 
 ## Installation
 
+The code defines two custom PyTorch modules, HybridDense and DynamicConv.
+
+HybridDense is a linear layer that implements a nonlinear function of the input tensor using a power function and a scaling factor. The powers and muls parameters are learned during training.
+
+DynamicConv is a custom convolutional layer that dynamically generates convolutional kernels for each patch of the input image using a neural network. The predictors attribute is a list of neural networks (one for each output channel of the convolution), which take as input a flattened patch of the input image and output a kernel for that patch. The extract_image_patches method is used to extract patches from the input image, which are then passed through the neural network to generate the convolutional kernels. The resulting kernels are used to convolve the patches and generate the output feature map.
+
+The encoder and decoder classes are defined using DynamicConv layers to implement an image encoder and decoder, respectively.
+
 ```python
   from hybrids import encoder
   enc = torch.load(encoder.pt)
