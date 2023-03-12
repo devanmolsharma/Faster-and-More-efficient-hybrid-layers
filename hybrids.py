@@ -8,16 +8,23 @@ import matplotlib.pyplot as plt
 class HybridDense(nn.Linear):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # Initialize parameters to be used in the forward method.
         self.powers = nn.Parameter(torch.ones(args[1]))
         self.muls = nn.Parameter(torch.ones(args[1]))
     
     def forward(self, inputs):
+        # Pass input through the dense layer.
         lin = F.linear(inputs, self.weight,self.bias)
+        # Apply ReLU activation function and add small epsilon value.
         x = nn.ReLU()(lin) + 1e-8
+        # Multiply with the learned scaling parameters and raise to learned power.
         x = torch.mul(self.muls,torch.pow(x, self.powers))
+        # Apply the sign of the linear output.
         x = torch.copysign(x,lin)
         return x
+    
     def to(self,device):
+        # Move the HybridDense object to the specified device.
         super().to(device)
         self.powers = self.powers.to(device)
         self.muls = self.muls.to(device)
@@ -26,22 +33,29 @@ class HybridDense(nn.Linear):
 class DynamicConv(nn.Module):
   def __init__(self,in_channels,out_channels,kernel_size,hidden_size=16,stride = 1,padding = 0):
     super(DynamicConv,self).__init__()
+    #defining a similar conv2d layer to learn the most common features (not necessary but it helps)
     self.similar_conv = nn.Conv2d(in_channels,out_channels,kernel_size,stride=stride,padding=padding)
+    
+    # defining base parameters of this class
     self.in_channels = in_channels
     self.out_channels = out_channels
     self.kernel_size = kernel_size
-    self.predictors = nn.ModuleList()
+    self.predictors = nn.ModuleList()# list of models to predict patches
+     self.stride = stride
+    self.padding = padding
     self.device = 'cpu'
+    
+    # creaste n models for n out channels
     for x in range(out_channels):
       self.predictors.append(nn.Sequential(HybridDense(kernel_size*kernel_size*(in_channels),hidden_size),
                                            nn.BatchNorm1d(hidden_size),
                                     HybridDense(hidden_size,hidden_size),
                                            nn.BatchNorm1d(hidden_size),
                                     nn.Linear(hidden_size,kernel_size*kernel_size*in_channels)))
-    self.stride = stride
-    self.padding = padding
+   
 
   def extract_image_patches(self,image, patch_size, stride=None, padding=0):
+        # it extracts patches for manual convolution
     if isinstance(patch_size, int):
         patch_size = (patch_size, patch_size)
 
@@ -70,33 +84,20 @@ class DynamicConv(nn.Module):
 
   def forward(self,inputs):
     in_size = inputs.size
-    patches = self.extract_image_patches(inputs,self.kernel_size,stride=self.stride,padding=self.padding)
-    if self.device == 'cpu':
-        kernels_list = []
-        for i in range(self.out_channels):
-            kernels_list.append(
-                (self.predictors[i](
-                    patches.view(-1,self.kernel_size*self.kernel_size*self.in_channels)
-                ).view(*patches.shape)).unsqueeze(-3)
-            )
-        kernels = torch.cat(kernels_list,axis = -3)
-    else:
-        kernels_list = []
-
-        def predictor_fn(i, patches, kernel_size, predictor):
-            return 
-
-        for i in range(self.out_channels):
-            predictor = self.predictors[i]
-            kernel = torch.nn.parallel.data_parallel(
-                predictor, ((patches.view(-1, self.kernel_size*self.kernel_size)).view(*patches.shape).unsqueeze(-3)),
-                device_ids=[0], output_device=0)
-            kernels_list.append(kernel)
-
-        kernels = torch.cat(kernels_list, axis=-3)
-
+    patches = self.extract_image_patches(inputs,self.kernel_size,stride=self.stride,padding=self.padding)# get patches
+    #predict kernels for each patch
+    kernels_list = []
+    for i in range(self.out_channels):
+        kernels_list.append(
+            (self.predictors[i](
+                patches.view(-1,self.kernel_size*self.kernel_size*self.in_channels)
+            ).view(*patches.shape)).unsqueeze(-3)
+        )
+    kernels = torch.cat(kernels_list,axis = -3)
+    
+    # apply convolution and reshape
     out = torch.mul(patches.unsqueeze(-3).repeat(1,1,1,1,self.out_channels,1,1),kernels).mean(axis=(-1,-2)).mean(axis=1)
-    return out.permute(0,3,1,2)+self.similar_conv(inputs)
+    return out.permute(0,3,1,2)+self.similar_conv(inputs) # add the normal convolution outputs to avoid learning very frequent kernels
 
   def to(self,device):
       super().to(device)
