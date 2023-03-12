@@ -33,6 +33,13 @@ Install use the layers
   import hybrids
   A = hybrids.DynamicConv(2,4)
 ```
+
+## Training 
+
+I have added tarinig  code to following notebook:
+
+- [Training Notebook](https://www.kaggle.com/code/keepupsharma/lw-encoder)
+
     
 ## Screenshots
 Samples of my 10 mb encoder (trained 3-4 hours)
