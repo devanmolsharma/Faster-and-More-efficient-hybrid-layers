@@ -50,13 +50,22 @@ Contains 1 layer (4 kernels (8x8)) stride 8, hidden size=512
 
 ![App Screenshot](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/light.png?raw=true)
 
-Samples of my 479 kb encoder (trained less than 1 hour)
+Samples of my 86 kb encoder (trained less than 1 hour)
 Contains 1 layer (4 kernels (8x8)) stride 8, hidden size=128
 
 ![App Screenshot](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/final%20(1).png?raw=true)
 
 
 ![App Screenshot](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/final.png?raw=true)
+
+Impressed? 
+
+Samples of my 479 kb encoder (trained less than 20 minutes)
+Contains 1 layer (4 kernels (8x8)) stride 8, hidden size=8
+
+![App Screenshot](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/vlight%20(1).png?raw=true)
+
+![App Screenshot](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/vlight%20(2).png?raw=true)
 
 ## Installation
 
@@ -87,3 +96,4 @@ The encoder and decoder classes are defined using DynamicConv layers to implemen
 
 - [10 mb Checkpoint](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/encoder%20(1).pt?raw=true)
 - [479 kb Checkpoint](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/lightencoder.pt?raw=true)
+- [86 kb Checkpoint](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/lightencoder%20(3).pt?raw=true)
