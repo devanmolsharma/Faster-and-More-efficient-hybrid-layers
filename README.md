@@ -58,6 +58,7 @@ Contains 1 layer (4 kernels (8x8)) stride 8, hidden size=8
 Not convinced? 
 
 Samples of my 1 mb autoencoder (trained less than 50 minutes)
+(Same latent space as stable diffusion)
 
 ![App Screenshot](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/result%20(3).png?raw=true)
 
