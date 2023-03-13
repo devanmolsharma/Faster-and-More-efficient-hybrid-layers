@@ -10,7 +10,6 @@ class HybridDense(nn.Linear):
         super().__init__(*args, **kwargs)
         # Initialize parameters to be used in the forward method.
         self.powers = nn.Parameter(torch.ones(args[1]))
-        self.muls = nn.Parameter(torch.ones(args[1]))
     
     def forward(self, inputs):
         # Pass input through the dense layer.
@@ -18,17 +17,15 @@ class HybridDense(nn.Linear):
         # Apply ReLU activation function and add small epsilon value.
         x = nn.ReLU()(lin) + 1e-8
         # Multiply with the learned scaling parameters and raise to learned power.
-        x = torch.mul(self.muls,torch.pow(x, self.powers))
+        torch.pow(x, self.powers.clip(-10,10))
         # Apply the sign of the linear output.
-        x = torch.nan_to_num(x)# handle nan
+        x = torch.nan_to_num(x)
         x = torch.copysign(x,lin)
-        return x
     
     def to(self,device):
         # Move the HybridDense object to the specified device.
         super().to(device)
         self.powers = self.powers.to(device)
-        self.muls = self.muls.to(device)
 
 
 class DynamicConv(nn.Module):
