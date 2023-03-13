@@ -1,6 +1,9 @@
 
 # Mind Your Own Kernels: Dynamic Convolution for Personalized Feature Extraction
 
+Paper: https://keep-up-sharma.github.io/mind_your_own_kernel/
+(not professional but i tried)
+
 
 Introducing Hybrid convolution and dense layers
 
@@ -9,20 +12,6 @@ Same function but 10x-20x faster and lighter
 Convolutional Neural Networks (CNNs) have achieved remarkable success in various computer vision tasks such as image classification, object detection, and segmentation. The Conv2d layer is a fundamental building block of CNNs, which applies a set of fixed filters (kernels) to extract features from the input image. However, storing and computing these kernels can be computationally expensive and memory-intensive, especially for large images or complex architectures. To address this issue, various techniques such as depthwise separable convolutions, dilated convolutions, and group convolutions have been proposed to reduce the number of parameters and computations. However, these methods still require storing a large number of pre-defined kernels.
 
 In this paper, we propose a custom Conv2d class, where kernels are predicted dynamically using a hybrid dense layer for each patch of the input image. This approach saves time and storage as the model doesn't have to remember kernels. The proposed method learns to predict the kernels that best extract features from the input patch, based on the patch's content. Our approach is inspired by recent works on dynamic convolution, which has shown promising results in various tasks such as object detection and segmentation.
-
-## Paper
-
-coming soon.
-
-
-
-##Methodology
-
-Our proposed custom Conv2d class is designed to predict kernels dynamically for each patch of the input image. Specifically, given an input patch of size HxWxC, we use N hybrid dense layers to predict a set of kernels of size KxKxC (and then concatenate them), where K is the kernel size, C is the number of input channels, and N is the number of output channels. The hybrid dense layer is composed of a depthwise convolution layer with a kernel size of 1x1 and a pointwise convolution layer with a kernel size of 3x3. This combination allows us to reduce the number of parameters and computations compared to a standard dense layer.
-
-The predicted kernels are then applied to the input patch using the standard convolution operation to obtain the output feature map of size H'xW'xN. The predicted kernels are not stored explicitly, but are computed on-the-fly for each patch. The weights of the hybrid dense layer are learned during training using backpropagation and gradient descent. During inference, the hybrid dense layer is used to predict the kernels for each patch, and the convolution operation is applied to obtain the output feature map.
-
-
 
 ## Installation
 
@@ -35,8 +24,8 @@ Install use the layers
 
 ## Training 
 
-I have added tarinig  code to following notebook:
-
+I have added training  code to following notebook:
+(might need some fixes)
 - [Training Notebook](https://www.kaggle.com/code/keepupsharma/lw-encoder)
 
     
@@ -66,15 +55,17 @@ Contains 1 layer (4 kernels (8x8)) stride 8, hidden size=8
 
 ![App Screenshot](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/vlight%20(2).png?raw=true)
 
+Not convinced? 
+
+Samples of my 1 mb autoencoder (trained less than 50 minutes)
+
+![App Screenshot](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/result%20(3).png?raw=true)
+
+![App Screenshot](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/result%20(4).png?raw=true)
+
+![App Screenshot](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/result%20(5).png?raw=true)
+
 ## Installation
-
-The code defines two custom PyTorch modules, HybridDense and DynamicConv.
-
-HybridDense is a linear layer that implements a nonlinear function of the input tensor using a power function and a scaling factor. The powers and muls parameters are learned during training.
-
-DynamicConv is a custom convolutional layer that dynamically generates convolutional kernels for each patch of the input image using a neural network. The predictors attribute is a list of neural networks (one for each output channel of the convolution), which take as input a flattened patch of the input image and output a kernel for that patch. The extract_image_patches method is used to extract patches from the input image, which are then passed through the neural network to generate the convolutional kernels. The resulting kernels are used to convolve the patches and generate the output feature map.
-
-The encoder and decoder classes are defined using DynamicConv layers to implement an image encoder and decoder, respectively.
 
 ```python
   from hybrids import encoder
@@ -96,3 +87,4 @@ The encoder and decoder classes are defined using DynamicConv layers to implemen
 - [10 mb Checkpoint](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/encoder%20(1).pt?raw=true)
 - [479 kb Checkpoint](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/lightencoder.pt?raw=true)
 - [86 kb Checkpoint](https://github.com/Keep-up-sharma/Dynamic-Layers/blob/main/lightencoder%20(3).pt?raw=true)
+- [86 kb Checkpoint](https://github.com/Keep-up-sharma/Faster-and-More-efficient-hybrid-layers/raw/main/autoencoder%20(1).pt)
