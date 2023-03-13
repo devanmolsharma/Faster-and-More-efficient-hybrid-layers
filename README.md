@@ -1,5 +1,5 @@
 
-# Dynamic Convolution and dense layers
+# Mind Your Own Kernels: Dynamic Convolution for Personalized Feature Extraction
 
 
 Introducing Hybrid convolution and dense layers
