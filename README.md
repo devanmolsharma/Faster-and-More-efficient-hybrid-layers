@@ -10,11 +10,10 @@ Convolutional Neural Networks (CNNs) have achieved remarkable success in various
 
 In this paper, we propose a custom Conv2d class, where kernels are predicted dynamically using a hybrid dense layer for each patch of the input image. This approach saves time and storage as the model doesn't have to remember kernels. The proposed method learns to predict the kernels that best extract features from the input patch, based on the patch's content. Our approach is inspired by recent works on dynamic convolution, which has shown promising results in various tasks such as object detection and segmentation.
 
-## Related Works
+## Paper
 
-Dynamic Convolution: Dynamic Convolution is a novel design that addresses the performance degradation issue of light-weight CNNs due to their low computational budgets. Unlike traditional CNNs that use a single convolution kernel per layer, Dynamic Convolution aggregates multiple parallel convolution kernels dynamically based on their attentions, which are input dependent.While Dynamic Convolution offers several advantages over traditional CNNs, it also has some drawbacks. One potential issue is the increased complexity in implementing and training such a model due to the dynamic aggregation of multiple kernels. Moreover, the attention mechanism may not always be accurate and may introduce noise in the convolution process, which could lead to reduced accuracy. Furthermore, the increased model complexity may also result in higher memory and computational requirements, which may limit its application in resource-constrained environments.
+coming soon.
 
-MobileNetV3: MobileNetV3 is a lightweight CNN architecture that uses a combination of depthwise separable convolutions, squeeze-and-excitation blocks, and a hybrid convolution operation that combines a depthwise convolution and a pointwise convolution. The hybrid convolution operation reduces the number of parameters and computations compared to standard convolutions.
 
 
 ##Methodology
