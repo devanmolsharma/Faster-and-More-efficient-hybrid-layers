@@ -1,7 +1,7 @@
 
 # Mind Your Own Kernels: Dynamic Convolution for Personalized Feature Extraction
 
-Paper: https://keep-up-sharma.github.io/mind_your_own_kernel/
+Paper: https://devanmolsharma.github.io/mind_your_own_kernel/
 (not professional but i tried)
 
 
